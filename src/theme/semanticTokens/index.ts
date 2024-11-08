@@ -1,5 +1,5 @@
 import { defineSemanticTokens } from '@chakra-ui/react';
 
-import colors from '@/theme/semanticTokens/colors';
+import colors from './colors';
 
 export default defineSemanticTokens({ colors });

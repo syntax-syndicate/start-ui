@@ -1,16 +1,14 @@
+'use client';
+
 import { forwardRef } from 'react';
 
-import type {
-  ButtonProps as ChakraButtonProps,
-  RecipeVariantProps,
-} from '@chakra-ui/react';
+import type { ButtonProps as ChakraButtonProps } from '@chakra-ui/react';
 import {
   AbsoluteCenter,
   Button as ChakraButton,
   Span,
   Spinner,
-  defineRecipe,
-  useRecipe,
+  chakra,
 } from '@chakra-ui/react';
 
 interface ButtonLoadingProps {
@@ -18,26 +16,14 @@ interface ButtonLoadingProps {
   loadingText?: React.ReactNode;
 }
 
-export interface ButtonProps
-  extends ChakraButtonProps,
-    ButtonLoadingProps,
-    RecipeVariantProps<typeof buttonRecipe> {}
+export interface ButtonProps extends ChakraButtonProps, ButtonLoadingProps {}
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+const CustomButton = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(props, ref) {
-    const recipe = useRecipe({ recipe: buttonRecipe });
-    const [recipeProps, restProps] = recipe.splitVariantProps(props);
-    const styles = recipe(recipeProps);
-
-    const { loading, disabled, loadingText, children, ...rest } = restProps;
+    const { loading, disabled, loadingText, children, ...rest } = props;
 
     return (
-      <ChakraButton
-        css={styles}
-        disabled={loading || disabled}
-        ref={ref}
-        {...rest}
-      >
+      <ChakraButton disabled={loading || disabled} ref={ref} {...rest}>
         {loading && !loadingText ? (
           <>
             <AbsoluteCenter display="inline-flex">
@@ -58,10 +44,75 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-const buttonRecipe = defineRecipe({
+const primaryStyle = {
+  bg: 'colorPalette.solid',
+  color: 'colorPalette.contrast',
+  _hover: {
+    bg: 'colorPalette.solid/90',
+  },
+  _expanded: {
+    bg: 'colorPalette.solid/90',
+  },
+};
+
+const secondaryStyle = {
+  bg: 'colorPalette.subtle',
+  color: 'colorPalette.fg',
+  shadow: 'inset 0 0 0px 1px var(--shadow-color)',
+  shadowColor: 'colorPalette.muted',
+  _hover: {
+    bg: 'colorPalette.muted',
+  },
+  _expanded: {
+    bg: 'colorPalette.muted',
+  },
+};
+
+export const Button = chakra(CustomButton, {
+  base: {
+    fontWeight: 'medium',
+    colorPalette: 'gray',
+  },
+  defaultVariants: { variant: 'surface' },
   variants: {
-    visual: {
-      '@primary': { colorPalette: 'brand' },
+    variant: {
+      '@primary': {
+        colorPalette: 'brand',
+        ...primaryStyle,
+      },
+      '@secondary': {
+        colorPalette: 'brand',
+        ...secondaryStyle,
+      },
+      '@success': {
+        colorPalette: 'green',
+        ...primaryStyle,
+      },
+      '@successSecondary': {
+        colorPalette: 'green',
+        ...secondaryStyle,
+      },
+      '@danger': {
+        colorPalette: 'red',
+        ...primaryStyle,
+      },
+      '@dangerSecondary': {
+        colorPalette: 'red',
+        ...secondaryStyle,
+      },
+      // default Chakra variants
+      solid: primaryStyle,
+      surface: secondaryStyle,
+      ghost: {
+        color: 'colorPalette.fg',
+        bg: 'colorPalette.500/05',
+        _hover: {
+          bg: 'colorPalette.500/15',
+        },
+        _expanded: {
+          bg: 'colorPalette.500/15',
+        },
+      },
     },
   },
 });

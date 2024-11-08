@@ -8,5 +8,15 @@ export const system = createSystem(defaultConfig, {
     tokens,
     semanticTokens,
   },
-  globalCss: {},
+  globalCss: {
+    html: {
+      background: { base: 'brand.50', _dark: 'brand.950' },
+      WebkitTapHighlightColor: 'transparent',
+    },
+    form: {
+      display: 'flex',
+      flexDir: 'column',
+      flex: 1,
+    },
+  },
 });

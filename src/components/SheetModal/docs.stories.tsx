@@ -1,6 +1,7 @@
-import { Button, Heading, Stack, useDisclosure } from '@chakra-ui/react';
+import { Heading, Stack, useDisclosure } from '@chakra-ui/react';
 
 import { SheetModal } from '@/components/SheetModal';
+import { Button } from '@/components/chakra-ui/button';
 
 export default {
   title: 'SheetModal',
