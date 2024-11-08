@@ -15,7 +15,7 @@ import {
 
 const DocumentationWrapper = ({ children, context, isDarkMode }) => {
   const { i18n } = useTranslation();
-  const { colorMode, setColorMode } = useColorMode();
+  const { setColorMode } = useColorMode();
 
   // Update color mode
   useEffect(() => {
@@ -36,13 +36,7 @@ const DocumentationWrapper = ({ children, context, isDarkMode }) => {
   }, [context.globals.locale]);
 
   return (
-    <Box
-      id="start-ui-storybook-wrapper"
-      p="4"
-      pb="8"
-      bg={colorMode === 'dark' ? 'gray.900' : 'white'}
-      flex="1"
-    >
+    <Box id="start-ui-storybook-wrapper" p="4" pb="8" flex="1">
       {children}
     </Box>
   );
